@@ -22,6 +22,7 @@ humans:
 - charlystereo
 date: '2026-10-10'
 links:
+- https://github.com/rehan-remade/universal-modder/tree/main/examples/outer-wilds-portal-gun
 - https://github.com/ow-mods/owml
 - https://github.com/ow-mods/ow-mod-man
 tags: [unity, owml, harmony, portals, stencil, oblique-camera, render-texture, teleport, viewmodel, momentum, mashup, portal-2]
@@ -31,7 +32,8 @@ tags: [unity, owml, harmony, portals, stencil, oblique-camera, render-texture, t
 > An OWML mod that adds Portal 2's portal gun to Outer Wilds on key 5, in every save, from the first second of
 > each loop, with or without the suit. Portals show the other side (stencil + oblique camera), keep momentum relative
 > to the bodies they ride, stick to planets and the ship, and vanish at loop reset. Player, scout and ship go
-> through. The viewmodel and sounds are converted from the user's Portal 2 (companion note in `games/portal-2/`).
+> through. The viewmodel and sounds are converted from the user's Portal 2 (companion note:
+> `games/portal-2/portal-2-portal-gun-viewmodel-converted-for-another-engine-v.md`).
 > Verified in the real game through a mod-side command bridge (screenshots, traces, OWML log) and real
 > keyboard/mouse input. Code: `examples/outer-wilds-portal-gun`.
 
@@ -49,6 +51,8 @@ tags: [unity, owml, harmony, portals, stencil, oblique-camera, render-texture, t
 OWML mod + Harmony. No portal mod existed (searched 2026-10-10). Rendering had to use shaders already in the build:
 a mod can't compile shaders and there is no Unity 2019.4 editor here for an AssetBundle. `UI/Default` exposes stencil
 and colour-mask properties, which is all a stencil portal needs.
+As a mashup this is Pattern 1 in `skills/mashup-mods/SKILL.md` (port the content): Portal 2 never runs, and its
+files are converted from the user's own install at install time, never shipped.
 
 ## How the game works (what we had to learn)
 - **Player camera** `PlayerCamera` (`OWCamera`): deferred, HDR, near 0.1, far 50000, fov 70. The skybox is drawn by a

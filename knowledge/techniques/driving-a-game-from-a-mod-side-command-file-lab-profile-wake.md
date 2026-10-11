@@ -22,6 +22,9 @@ tags: [oracle, test-harness, automation, dev-bridge, unity, owml, outer-wilds]
   just screenshots.
 - The user is at the PC, or input injection is unreliable for the action (sub-frame clicks, raw input).
 - Keep a short real-input pass at the end (with the user's OK) to prove the actual bindings.
+- It's the file-based cousin of the socket bridge in `skills/game-automation/SKILL.md`
+  (`examples/terraria-tmodloader/reference/AgentBridge.cs`): no port to bind, at the cost of polling. It is one
+  kind of oracle from `oracles-how-agents-know-a-mod-works.md`.
 
 ## How
 - **Switch:** off unless a marker file exists (`dev.enabled` in the mod folder), so release builds behave normally.
@@ -57,6 +60,12 @@ tags: [oracle, test-harness, automation, dev-bridge, unity, owml, outer-wilds]
    to the ground body) and log velocities, not just positions.
 4. **Short injected clicks are missed.** **Cause:** the game polls button state per frame. **Fix:** hold ≥ 60 ms
    (`um win drive ... "click x y"`), and know the game's real default bindings before blaming the mod.
+5. **Commands lost or run twice.** **Cause:** the file is read and then deleted, so lines written in between are
+   lost, and a delete that lags the read (Wine) runs a file twice. Two other projects hit this: Risk of Rain 2
+   (Gotcha 13) and Schedule I (Gotcha 9). **Fix:** put a whole sequence in one file (`wait` inside it), wait for the
+   file to disappear before writing the next one, and skip a file whose last-write time you've already handled.
 
 ## Seen in
 - `games/outer-wilds/portal-2-portal-gun-in-outer-wilds-1-1-16-owml-see-through-p.md`
+- `games/risk-of-rain-2/helldiver-survivor.md` (lab bridge, Gotcha 13)
+- `games/schedule-i/qol-suite-and-stack-limits-on-the-schedule-i-0-4-7-il2cpp-be.md` (dev command file, Gotcha 9)

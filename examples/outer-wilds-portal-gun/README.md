@@ -7,13 +7,19 @@ ship) and vanish when the loop resets. The player, the scout and the ship can go
 The model, textures and sounds come from **your own Portal 2 install**: a converter reads them on your machine.
 Nothing from Valve or Mobius ships with this mod.
 
+It was built and tested in October 2026 on Windows 11 with Outer Wilds 1.1.16.1372 (Steam, Echoes of the Eye
+installed), OWML 2.16.3, the Outer Wilds Mod Manager 0.15.7 and Portal 2 from Steam. Not tested: gamepad buttons,
+the Epic build, other screen sizes. The field notes have the details:
+`knowledge/games/outer-wilds/portal-2-portal-gun-in-outer-wilds-1-1-16-owml-see-through-p.md` (the mod) and
+`knowledge/games/portal-2/portal-2-portal-gun-viewmodel-converted-for-another-engine-v.md` (the converter).
+
 ## Controls
 
 | Input | Action |
 |---|---|
 | `5` | take out / put away the portal gun (configurable) |
-| Left mouse / gamepad RB | blue portal |
-| Right mouse / gamepad LB | orange portal |
+| Left mouse / gamepad RB (untested) | blue portal |
+| Right mouse / gamepad LB (untested) | orange portal |
 | Mouse wheel (gun out) | portal size: normal 1.6 x 2.6 m, large 3.2 x 5.2 m, ship 8 x 13 m |
 
 Taking out a game tool (signalscope, scout launcher, translator) puts the gun away. Sitting at a console, talking
@@ -22,14 +28,16 @@ left mouse doesn't lock on.
 
 ## Install
 
-Needs: Outer Wilds (Steam/Epic/Xbox), Portal 2 (Steam), the [Outer Wilds Mod Manager](https://outerwildsmods.com/)
-with OWML 2.16+, Python 3.10+ with `pillow` and `numpy`, and the .NET SDK (6+) to build.
+Needs: Outer Wilds (Steam; OWML also supports Epic, untested here), Portal 2 (Steam), the
+[Outer Wilds Mod Manager](https://outerwildsmods.com/) with OWML 2.16+, Python 3.10+ with `pillow` and `numpy`, and
+the .NET SDK (6+) to build. `dotnet build` fetches OWML and the community's `OuterWildsGameLibs` reference package
+from NuGet; nothing from the game is in this folder.
 
 1. Convert the gun from Portal 2 (writes `%LOCALAPPDATA%\OWPortalGun`, about 8 MB, under a second):
    ```
    pip install pillow numpy
-   python tools/convert.py                          # finds Steam's Portal 2 by itself
-   python tools/convert.py --portal2 "D:\Games\Portal 2"   # or point at it
+   python tools/convert.py                          # looks in the default Steam library
+   python tools/convert.py --portal2 "D:\Games\Portal 2"   # any other library: point at it
    ```
 2. Build the mod straight into OWML's mods folder (`%APPDATA%\OuterWildsModManager\OWML\Mods\charlystereo.PortalGun`):
    ```
